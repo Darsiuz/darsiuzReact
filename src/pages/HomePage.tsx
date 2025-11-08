@@ -20,6 +20,7 @@ export default function HomePage({ students }: Props) {
                                     <h5 className="card-title">{student.name}</h5>
                                     <p className="card-text">Curso: {student.course}</p>
                                     <p className="card-text">Email: {student.email}</p>
+                                    <p className="card-text">Edad: {student.edad}</p>
                                 </div>
                             </div>
                         </div>

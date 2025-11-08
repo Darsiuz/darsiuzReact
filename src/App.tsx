@@ -9,18 +9,20 @@ export type Student = {
     name: string;
     email: string;
     course: string;
+    edad: number;
 };
 
 function App() {
 
     const [students, setStudents] = useState<Student[]>([]);
 
-    const handleAddStudent = (name: string, course: string, email: string) => {
+    const handleAddStudent = (name: string, course: string, email: string, edad: number) => {
         const newStudent: Student = {
             id: Date.now(),
             name: name,
             email: email,
             course: course,
+            edad: edad
         };
 
         setStudents(prevStudents => [...prevStudents, newStudent]);
