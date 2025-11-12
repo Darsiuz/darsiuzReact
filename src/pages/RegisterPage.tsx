@@ -1,21 +1,27 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-type Props = {
-    onAddStudent: (name: string, course: string, email: string, edad: number) => void;
-};
-export default function RegisterPage({ onAddStudent }: Props) {
+import { useStudents } from '../context/StudentContext';
+
+export default function RegisterPage() {
 
     const [name, setName] = useState('');
     const [course, setCourse] = useState('');
     const [email, setEmail] = useState('');
     const [edad, setEdad] = useState(0);
 
-
+    const { addStudent: onAddStudent } = useStudents();
     const navigate = useNavigate();
+    // TAREA 2: useRef para acceder al DOM
+    // 1. Creamos la referencia
+    const nameInputRef = useRef<HTMLInputElement>(null);
+    // TAREA 2: useEffect para hacer foco al cargar la pagina
+    useEffect(() => {
+        nameInputRef.current?.focus();
+    }, []); // <-- Array vacío, se ejecuta 1 SOLA VEZ
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault(); // Evita que la página se recargue
-        
         // Validación simple
         if (!name || !course || !email) {
             alert('Por favor completa todos los campos');
@@ -41,20 +47,11 @@ export default function RegisterPage({ onAddStudent }: Props) {
                         type="text"
                         className="form-control"
                         id="name"
-                        value={name} // 1. El valor lo da el State
-                        onChange={(e) => setName
-                            (e.target.value)} // 2. onChange actualiza el State
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="course" className="form-label">Curso</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="course"
-                        value={course} // 1. El valor lo da el State
-                        onChange={(e) => setCourse
-                            (e.target.value)} // 2. onChange actualiza el State
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        // TAREA 2: "Conectamos" el ref al input
+                        // 3. Asignamos el ref al atributo 'ref' del input
+                        ref={nameInputRef}
                     />
                 </div>
                 <div className="mb-3">
@@ -63,9 +60,18 @@ export default function RegisterPage({ onAddStudent }: Props) {
                         type="email"
                         className="form-control"
                         id="email"
-                        value={email} // 1. El valor lo da el State
-                        onChange={(e) => setEmail
-                            (e.target.value)} // 2. onChange actualiza el State
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="course" className="form-label">Curso</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="course"
+                        value={course}
+                        onChange={(e) => setCourse(e.target.value)}
                     />
                 </div>
                 <div className="mb-3">
@@ -84,5 +90,5 @@ export default function RegisterPage({ onAddStudent }: Props) {
                 </button>
             </form>
         </div>
-    )
+    );
 }

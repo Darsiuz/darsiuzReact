@@ -1,9 +1,8 @@
-import { type Student } from '../App';
+import { useStudents } from '../context/StudentContext';
 
-type Props = {
-    students: Student[];
-};
-export default function HomePage({ students }: Props) {
+export default function HomePage() {
+    const { students } = useStudents();
+
     return (
         <div>
             <h2>Lista de Alumnos Registrados</h2>
