@@ -1,7 +1,7 @@
 import { useStudents } from '../context/StudentContext';
 
 export default function HomePage() {
-    const { students } = useStudents();
+    const { students, deleteStudent } = useStudents();
 
     return (
         <div>
@@ -20,6 +20,7 @@ export default function HomePage() {
                                     <p className="card-text">Curso: {student.course}</p>
                                     <p className="card-text">Email: {student.email}</p>
                                     <p className="card-text">Edad: {student.edad}</p>
+                                    <button className="btn btn-danger" onClick={() => deleteStudent(student.id)}>Eliminar</button>
                                 </div>
                             </div>
                         </div>
