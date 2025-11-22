@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useStudents } from '../context/StudentContext';
+import TituloContador from '../components/TituloContador';
 
 export default function HomePage() {
     const { students, deleteStudent, countStudents } = useStudents();
@@ -14,17 +15,14 @@ export default function HomePage() {
     }, []);
 
     const handleDelete = async (id: number) => {
-        await deleteStudent(id);
+        deleteStudent(id);
         setTotal(prev => prev - 1);
     };
 
 
     return (
         <div>
-            <div className="alert alert-primary" role="alert">
-                <center><h2>SISTEMA de DAVID GALVEZ MONTUFAR</h2></center>
-                <center><h3>Total de alumnos: {total}</h3></center>
-            </div>
+            <TituloContador total={total} nombre="DAVID GALVEZ MONTUFAR" />
 
             <h2>Lista de Alumnos Registrados</h2>
             <hr />

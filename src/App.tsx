@@ -63,7 +63,7 @@ function App() {
             const response = await axios.get(API_URL+'/total/count');
             return response.data.total;
         } catch (error) {
-            console.error('Error counting students:', error);
+            console.error('Error al contar estudiantes:', error);
             return 0;
         }
     };
