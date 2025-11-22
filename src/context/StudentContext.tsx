@@ -13,7 +13,6 @@ type StudentContextType = {
     addStudent: (name: string, email: string, course: string, edad: number) => void;
     deleteStudent: (id: number) => void;
 };
-// 3. Creamos el Contexto
 // Un valor por defecto que coincide con el tipo, aunque el valor real vendrá del Provider en App.tsx.
 export const StudentContext =
     createContext<StudentContextType>({
@@ -22,7 +21,7 @@ export const StudentContext =
         deleteStudent: () => { },
     });
 //"Hook personalizado"
-// Esto nos ahorra importar useContext y StudentContext en cada componente.
+// Ahorra importar useContext y StudentContext en cada componente.
 export const useStudents = () => {
     const context = useContext(StudentContext);
     if (!context) {

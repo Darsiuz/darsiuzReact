@@ -16,11 +16,16 @@ export default function HomePage() {
                         <div className="col-md-4" key={student.id}>
                             <div className="card mb-3">
                                 <div className="card-body">
-                                    <h5 className="card-title">{student.name}</h5>
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <h5 className="card-title">{student.name}</h5>
+                                        <h5 className="card-subtitle mb-2 text-muted">ID: {student.id}</h5>
+                                    </div>
                                     <p className="card-text">Curso: {student.course}</p>
                                     <p className="card-text">Email: {student.email}</p>
                                     <p className="card-text">Edad: {student.edad}</p>
-                                    <button className="btn btn-danger" onClick={() => deleteStudent(student.id)}>Eliminar</button>
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <button className="btn btn-danger" onClick={() => deleteStudent(student.id)}>Eliminar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

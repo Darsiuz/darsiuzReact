@@ -12,24 +12,24 @@ export default function RegisterPage() {
 
     const { addStudent: onAddStudent } = useStudents();
     const navigate = useNavigate();
-    // TAREA 2: useRef para acceder al DOM
+
     // 1. Creamos la referencia
     const nameInputRef = useRef<HTMLInputElement>(null);
+    const emailInputRef = useRef<HTMLInputElement>(null);
+    const courseInputRef = useRef<HTMLInputElement>(null);
+    const edadInputRef = useRef<HTMLInputElement>(null);
     // TAREA 2: useEffect para hacer foco al cargar la pagina
     useEffect(() => {
         nameInputRef.current?.focus();
-    }, []); // <-- Array vacío, se ejecuta 1 SOLA VEZ
+    }, []);
 
     const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault(); // Evita que la página se recargue
-        // Validación simple
+        e.preventDefault();
         if (!name || !course || !email) {
             alert('Por favor completa todos los campos');
             return;
         }
-
         onAddStudent(name, course, email, edad);
-        // Limpiar el formulario
         setName('');
         setCourse('');
         setEmail('');
@@ -49,8 +49,6 @@ export default function RegisterPage() {
                         id="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        // TAREA 2: "Conectamos" el ref al input
-                        // 3. Asignamos el ref al atributo 'ref' del input
                         ref={nameInputRef}
                     />
                 </div>
@@ -62,6 +60,7 @@ export default function RegisterPage() {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        ref={emailInputRef}
                     />
                 </div>
                 <div className="mb-3">
@@ -72,6 +71,7 @@ export default function RegisterPage() {
                         id="course"
                         value={course}
                         onChange={(e) => setCourse(e.target.value)}
+                        ref={courseInputRef}
                     />
                 </div>
                 <div className="mb-3">
@@ -81,8 +81,8 @@ export default function RegisterPage() {
                         className="form-control"
                         id="edad"
                         value={edad === 0 ? '' : edad} // 1. El valor lo da el State
-                        onChange={(e) => setEdad
-                            (parseInt(e.target.value))} // 2. onChange actualiza el State
+                        onChange={(e) => setEdad(parseInt(e.target.value))}
+                        ref={edadInputRef}
                     />
                 </div>
                 <button type="submit" className="btn btn-primary">
