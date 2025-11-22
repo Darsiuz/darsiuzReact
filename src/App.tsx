@@ -58,12 +58,23 @@ function App() {
         }
     };
 
+    const countStudents = async () => {
+        try {
+            const response = await axios.get(API_URL+'/total/count');
+            return response.data.total;
+        } catch (error) {
+            console.error('Error counting students:', error);
+            return 0;
+        }
+    };
+
     return (
         // Envolvemos toda la app con el Provider y le pasamos el 'value'
         <StudentContext.Provider value={{
             students: students,
             addStudent: handleAddStudent,
             deleteStudent: handleDeleteStudent,
+            countStudents: countStudents
         }}>
             <ToastContainer />
             <Header />

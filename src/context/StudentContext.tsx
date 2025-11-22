@@ -12,6 +12,7 @@ type StudentContextType = {
     students: Student[];
     addStudent: (name: string, email: string, course: string, edad: number) => void;
     deleteStudent: (id: number) => void;
+    countStudents: () => Promise<number>;
 };
 // Un valor por defecto que coincide con el tipo, aunque el valor real vendrá del Provider en App.tsx.
 export const StudentContext =
@@ -19,6 +20,7 @@ export const StudentContext =
         students: [],
         addStudent: () => { },
         deleteStudent: () => { },
+        countStudents: () => Promise.resolve(0),
     });
 //"Hook personalizado"
 // Ahorra importar useContext y StudentContext en cada componente.

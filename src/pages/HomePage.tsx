@@ -1,10 +1,31 @@
+import { useState, useEffect } from 'react';
 import { useStudents } from '../context/StudentContext';
 
 export default function HomePage() {
-    const { students, deleteStudent } = useStudents();
+    const { students, deleteStudent, countStudents } = useStudents();
+    const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        const fetchTotal = async () => {
+            const totalCount = await countStudents();
+            setTotal(totalCount);
+        };
+        fetchTotal();
+    }, []);
+
+    const handleDelete = async (id: number) => {
+        await deleteStudent(id);
+        setTotal(prev => prev - 1);
+    };
+
 
     return (
         <div>
+            <div className="alert alert-primary" role="alert">
+                <center><h2>SISTEMA de DAVID GALVEZ MONTUFAR</h2></center>
+                <center><h3>Total de alumnos: {total}</h3></center>
+            </div>
+
             <h2>Lista de Alumnos Registrados</h2>
             <hr />
             {students.length === 0 ? (
@@ -24,7 +45,7 @@ export default function HomePage() {
                                     <p className="card-text">Email: {student.email}</p>
                                     <p className="card-text">Edad: {student.edad}</p>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <button className="btn btn-danger" onClick={() => deleteStudent(student.id)}>Eliminar</button>
+                                        <button className="btn btn-danger" onClick={() => handleDelete(student.id)}>Eliminar</button>
                                     </div>
                                 </div>
                             </div>
