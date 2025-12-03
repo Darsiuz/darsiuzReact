@@ -1,45 +1,60 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useStudents } from '../context/StudentContext';
 
-export default function RegisterPage() {
+export default function EditStudent() {
+
+    const { id } = useParams();
+    const { getStudentById, editStudent } = useStudents();
+
+    const student = id ? getStudentById(Number(id)) : null;
 
     const [name, setName] = useState('');
-    const [course, setCourse] = useState('');
     const [email, setEmail] = useState('');
+    const [course, setCourse] = useState('');
     const [edad, setEdad] = useState(0);
 
-    const { addStudent: onAddStudent } = useStudents();
     const navigate = useNavigate();
 
-    // 1. Creamos la referencia
+    // Referencias (igual que tu original)
     const nameInputRef = useRef<HTMLInputElement>(null);
     const emailInputRef = useRef<HTMLInputElement>(null);
     const courseInputRef = useRef<HTMLInputElement>(null);
     const edadInputRef = useRef<HTMLInputElement>(null);
-    // TAREA 2: useEffect para hacer foco al cargar la pagina
+
+    // Cargar datos del estudiante al abrir la página
     useEffect(() => {
+        if (student) {
+            setName(student.name);
+            setEmail(student.email);
+            setCourse(student.course);
+            setEdad(student.edad);
+        }
         nameInputRef.current?.focus();
-    }, []);
+    }, [student]);
+
+    if (!student) {
+        return <h2>Alumno no encontrado</h2>;
+    }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
         if (!name || !course || !email) {
             alert('Por favor completa todos los campos');
             return;
         }
-        onAddStudent(name, email, course, edad);
-        setName('');
-        setCourse('');
-        setEmail('');
-        setEdad(0);
+
+        editStudent(student.id, name, course, email, edad);
 
         navigate('/');
     };
+
     return (
         <div className='card card-body'>
-            <h2>Registrar Nuevo Alumno</h2>
+            <h2>Editar Alumno</h2>
+
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Nombre Completo</label>
@@ -52,17 +67,7 @@ export default function RegisterPage() {
                         ref={nameInputRef}
                     />
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="course" className="form-label">Curso</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="course"
-                        value={course}
-                        onChange={(e) => setCourse(e.target.value)}
-                        ref={courseInputRef}
-                    />
-                </div>
+
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email</label>
                     <input
@@ -74,19 +79,33 @@ export default function RegisterPage() {
                         ref={emailInputRef}
                     />
                 </div>
+
+                <div className="mb-3">
+                    <label htmlFor="course" className="form-label">Curso</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="course"
+                        value={course}
+                        onChange={(e) => setCourse(e.target.value)}
+                        ref={courseInputRef}
+                    />
+                </div>
+
                 <div className="mb-3">
                     <label htmlFor="edad" className="form-label">Edad</label>
                     <input
                         type="number"
                         className="form-control"
                         id="edad"
-                        value={edad === 0 ? '' : edad} // 1. El valor lo da el State
+                        value={edad}
                         onChange={(e) => setEdad(parseInt(e.target.value))}
                         ref={edadInputRef}
                     />
                 </div>
+
                 <button type="submit" className="btn btn-primary">
-                    Registrar
+                    Guardar Cambios
                 </button>
             </form>
         </div>

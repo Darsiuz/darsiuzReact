@@ -12,13 +12,7 @@ export default function HomePage() {
             setTotal(totalCount);
         };
         fetchTotal();
-    }, []);
-
-    const handleDelete = async (id: number) => {
-        deleteStudent(id);
-        setTotal(prev => prev - 1);
-    };
-
+    }, [students]);
 
     return (
         <div>
@@ -43,7 +37,8 @@ export default function HomePage() {
                                     <p className="card-text">Email: {student.email}</p>
                                     <p className="card-text">Edad: {student.edad}</p>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <button className="btn btn-danger" onClick={() => handleDelete(student.id)}>Eliminar</button>
+                                        <a href={`/edit/${student.id}`} className="btn btn-primary">Editar</a>
+                                        <button className="btn btn-danger" onClick={() => deleteStudent(student.id)}>Eliminar</button>
                                     </div>
                                 </div>
                             </div>
