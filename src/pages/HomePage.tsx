@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useStudents } from '../context/StudentContext';
 import TituloContador from '../components/TituloContador';
+import MiniPerfil from '../components/MiniPerfil';
 
 export default function HomePage() {
     const { students, deleteStudent, countStudents } = useStudents();
@@ -17,7 +18,6 @@ export default function HomePage() {
     return (
         <div>
             <TituloContador total={total} nombre="DAVID GALVEZ MONTUFAR" />
-
             <h2>Lista de Alumnos Registrados</h2>
             <hr />
             {students.length === 0 ? (
@@ -36,10 +36,18 @@ export default function HomePage() {
                                     <p className="card-text">Curso: {student.course}</p>
                                     <p className="card-text">Email: {student.email}</p>
                                     <p className="card-text">Edad: {student.edad}</p>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <a href={`/edit/${student.id}`} className="btn btn-primary">Editar</a>
-                                        <button className="btn btn-danger" onClick={() => deleteStudent(student.id)}>Eliminar</button>
-                                    </div>
+
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center card-footer">
+                                    <MiniPerfil
+                                        id={student.id}
+                                        name={student.name}
+                                        email={student.email}
+                                        course={student.course}
+                                        edad={student.edad}
+                                    />
+                                    <a href={`/edit/${student.id}`} className="btn btn-primary">Editar</a>
+                                    <button className="btn btn-danger" onClick={() => deleteStudent(student.id)}>Eliminar</button>
                                 </div>
                             </div>
                         </div>

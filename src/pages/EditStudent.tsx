@@ -17,13 +17,11 @@ export default function EditStudent() {
 
     const navigate = useNavigate();
 
-    // Referencias (igual que tu original)
     const nameInputRef = useRef<HTMLInputElement>(null);
     const emailInputRef = useRef<HTMLInputElement>(null);
     const courseInputRef = useRef<HTMLInputElement>(null);
     const edadInputRef = useRef<HTMLInputElement>(null);
 
-    // Cargar datos del estudiante al abrir la página
     useEffect(() => {
         if (student) {
             setName(student.name);
@@ -46,7 +44,7 @@ export default function EditStudent() {
             return;
         }
 
-        editStudent(student.id, name, course, email, edad);
+        editStudent(student.id, name, email, course, edad);
 
         navigate('/');
     };
@@ -105,7 +103,7 @@ export default function EditStudent() {
                 </div>
 
                 <button type="submit" className="btn btn-primary">
-                    Guardar Cambios
+                    Actualizar
                 </button>
             </form>
         </div>

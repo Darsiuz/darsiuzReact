@@ -88,7 +88,6 @@ function App() {
     };
 
     return (
-        // Envolvemos toda la app con el Provider y le pasamos el 'value'
         <StudentContext.Provider value={{
             students: students,
             addStudent: handleAddStudent,
