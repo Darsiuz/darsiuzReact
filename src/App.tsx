@@ -16,13 +16,6 @@ const axi = axios.create({
     headers: header
 });
 
-// Datos de prueba
-// const INITIAL_STUDENTS: Student[] = [
-//     { id: 1001, name: 'Carlos Gómez', email: 'carlos@example.com', course: 'JavaScript Avanzado', edad: 25 },
-//     { id: 1002, name: 'Ana Torres', email: 'ana@example.com', course: 'React con TS', edad: 22 },
-//     { id: 1003, name: 'Luis Pérez', email: 'luis@example.com', course: 'Node.js', edad: 28 },
-// ];
-
 function App() {
 
     const [students, setStudents] = useState<Student[]>([]);

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { useStudents } from '../context/StudentContext';
 
@@ -13,12 +14,10 @@ export default function RegisterPage() {
     const { addStudent: onAddStudent } = useStudents();
     const navigate = useNavigate();
 
-    // 1. Creamos la referencia
     const nameInputRef = useRef<HTMLInputElement>(null);
     const emailInputRef = useRef<HTMLInputElement>(null);
     const courseInputRef = useRef<HTMLInputElement>(null);
     const edadInputRef = useRef<HTMLInputElement>(null);
-    // TAREA 2: useEffect para hacer foco al cargar la pagina
     useEffect(() => {
         nameInputRef.current?.focus();
     }, []);
@@ -26,7 +25,7 @@ export default function RegisterPage() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!name || !course || !email) {
-            alert('Por favor completa todos los campos');
+            toast('Por favor completa todos los campos', { type: 'error' });
             return;
         }
         onAddStudent(name, email, course, edad);
@@ -80,7 +79,7 @@ export default function RegisterPage() {
                         type="number"
                         className="form-control"
                         id="edad"
-                        value={edad === 0 ? '' : edad} // 1. El valor lo da el State
+                        value={edad === 0 ? '' : edad}
                         onChange={(e) => setEdad(parseInt(e.target.value))}
                         ref={edadInputRef}
                     />
@@ -88,6 +87,7 @@ export default function RegisterPage() {
                 <button type="submit" className="btn btn-primary">
                     Registrar
                 </button>
+                <ToastContainer />
             </form>
         </div>
     );

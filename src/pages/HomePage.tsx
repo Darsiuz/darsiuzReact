@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useStudents } from '../context/StudentContext';
 import TituloContador from '../components/TituloContador';
 import MiniPerfil from '../components/MiniPerfil';
 
 export default function HomePage() {
+    const modalOpeners = useRef<Record<number, Function>>({});
     const { students, deleteStudent, countStudents } = useStudents();
     const [total, setTotal] = useState(0);
 
@@ -28,14 +29,14 @@ export default function HomePage() {
                     {students.map(student => (
                         <div className="col-md-4" key={student.id}>
                             <div className="card mb-3">
-                                <div className="card-body">
+                                <div className="card-body user-select-none cursor-mano" onClick={() => modalOpeners.current[student.id]?.()}>
                                     <div className="d-flex justify-content-between align-items-center">
                                         <h5 className="card-title">{student.name}</h5>
                                         <h5 className="card-subtitle mb-2 text-muted">ID: {student.id}</h5>
                                     </div>
                                     <p className="card-text">Curso: {student.course}</p>
                                     <p className="card-text">Email: {student.email}</p>
-                                    <p className="card-text">Edad: {student.edad}</p>
+                                    {/* <p className="card-text">Edad: {student.edad}</p> */}
 
                                 </div>
                                 <div className="d-flex justify-content-between align-items-center card-footer">
@@ -45,6 +46,9 @@ export default function HomePage() {
                                         email={student.email}
                                         course={student.course}
                                         edad={student.edad}
+                                        onExposeOpen={(id, open) => {
+                                            modalOpeners.current[id] = open;
+                                        }}
                                     />
                                     <a href={`/edit/${student.id}`} className="btn btn-primary">Editar</a>
                                     <button className="btn btn-danger" onClick={() => deleteStudent(student.id)}>Eliminar</button>
